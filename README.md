@@ -26,7 +26,7 @@ And the details for running a Docker image : [Bitnami/Docker](https://hub.docker
 
 > $ docker run -d --name kafka-server -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e ALLOW_PLAINTEXT_LISTENER bitnami/kafka:latest
 
-Please read carefully the readme to get a better understanding of how to run and use the container - here we in development environment.
+Please read carefully the readme to get a better understanding of how to run and use the container - here we are in development environment.
 
 
 
