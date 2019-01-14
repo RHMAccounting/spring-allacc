@@ -15,6 +15,8 @@ For handling the configuration, a **Zookeeper** instance must also be running, s
 
 > $ docker run --name rhm-zookeeper --restart always -d zookeeper
 
+Use the -P flag if you are running your application outside of the container.
+
 You may also decide to run Zookeeper on your own following the [documentation](https://zookeeper.apache.org/doc/current/zookeeperStarted.html).
 
 
@@ -24,7 +26,7 @@ Now [Kafka](https://kafka.apache.org/intro) :
 
 And the details for running a Docker image : [Bitnami/Docker](https://hub.docker.com/r/bitnami/kafka/)
 
-> $ docker run -d --name kafka-server -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e ALLOW_PLAINTEXT_LISTENER bitnami/kafka:latest
+> $ docker run -d --name kafka-server -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest
 
 Please read carefully the readme to get a better understanding of how to run and use the container - here we are in development environment.
 
