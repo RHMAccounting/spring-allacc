@@ -37,4 +37,26 @@ Please read carefully the readme files to get a better understanding of how to r
 *Note :*
     Bitnami also provides a Docker image with both Zookeeper and Kafka, you are free to use it.
    
-   
+### Keycloak
+
+As for the Kafka and Zookeeper instances, we choose to run a Docker image featuring Keycloak server.
+Keycloak is an Open Source identity and access management (see [Keycloak website](https://www.keycloak.org/)). 
+This solution has been chosen as it is a reference in its field and it allows to us to concentrate on the core business of our application.
+
+You may also run Okta or whatever identity/access management tool.
+
+Here we use the Docker image from [jboss/Keycloak](https://hub.docker.com/r/jboss/keycloak).
+
+Let's first define a network for our instance :
+
+> $ docker network create keycloak-network
+
+Then run a Postgresql server using Docker as well (or whatever DB server ) :
+
+> docker run -d --name postgres --net keycloak-network -e POSTGRES_DB=keycloak -e POSTGRES_USER=keycloak -e POSTGRES_PASSWORD=password postgres
+
+And finally :
+
+> $ docker run --name keycloak -e DB_VENDOR=postgres -e JDBC_PARAMS='connectTimeout=30' -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=123456 --net keycloak-network jboss/keycloak
+
+
