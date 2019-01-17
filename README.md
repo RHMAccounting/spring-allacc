@@ -41,7 +41,7 @@ Please read carefully the readme files to get a better understanding of how to r
 
 As for the Kafka and Zookeeper instances, we choose to run a Docker image featuring Keycloak server.
 Keycloak is an Open Source identity and access management (see [Keycloak website](https://www.keycloak.org/)). 
-This solution has been chosen as it is a reference in its field and it allows to us to concentrate on the core business of our application.
+This solution has been chosen as it is a reference in its field and it allows us to concentrate on the core business of our application.
 
 You may also run Okta or whatever identity/access management tool.
 
@@ -59,4 +59,14 @@ And finally :
 
 > $ docker run --name keycloak -e DB_VENDOR=postgres -e JDBC_PARAMS='connectTimeout=30' -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=123456 --net keycloak-network jboss/keycloak
 
+
+To quickly get started wtih Keycloak, follow the steps :
+
+   1. Add a new Realm (ie : RHM)
+   2. Add a client (ie : rhm-gate)
+   3. Once the settings are available, fill in a valid redirect uri to match the future Zuul gateway (ie : http://localhost:8090)
+   4. Create a User role
+   5. add a user and give him a role
+   
+For more information, refer to Keycloak documentation.
 
