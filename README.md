@@ -70,3 +70,9 @@ To quickly get started wtih Keycloak, follow the steps :
    
 For more information, refer to Keycloak documentation.
 
+### Zipkin
+
+For proper debugging, we need a way to trace requests across our micro services, here we use Zipkin and a docker image :
+
+> $ docker run -d -p 9411:9411 openzipkin/zipkin
+
