@@ -10,10 +10,10 @@ security:
     client:
       clientId: rhm-gateway
       clientSecret: be20f0a6-40dc-4e9b-a469-771685f0e613
-      accessTokenUri: http://192.168.99.100:8180/auth/realms/RHM/protocol/openid-connect/token
-      userAuthorizationUri: http://192.168.99.100:8180/auth/realms/RHM/protocol/openid-connect/auth
+      accessTokenUri: http://192.168.99.100:8080/auth/realms/RHM/protocol/openid-connect/token
+      userAuthorizationUri: http://192.168.99.100:8080/auth/realms/RHM/protocol/openid-connect/auth
       token-name: access_token
       authenticationScheme: header
       clientAuthenticationScheme: header
     resource:
-      userInfoUri: http://192.168.99.100:8180/auth/realms/RHM/protocol/openid-connect/userinfo
+      userInfoUri: http://192.168.99.100:8080/auth/realms/RHM/protocol/openid-connect/userinfo
