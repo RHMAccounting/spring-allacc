@@ -65,8 +65,10 @@ To quickly get started wtih Keycloak, follow the steps :
    1. Add a new Realm (ie : RHM)
    2. Add a client (ie : rhm-gate)
    3. Once the settings are available, fill in a valid redirect uri to match the future Zuul gateway (ie : http://localhost:8090)
-   4. Create a User role
-   5. add a user and give him a role
+   4. Set the access type to bearer-only on the client page and click save
+   5. Now head to the credentials tab and get the secret (you will need it to set up authentication from within your application)
+   6. Create a User role
+   7. add a user and give him a role
    
 For more information, refer to Keycloak documentation.
 
