@@ -3,7 +3,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/RHMAccounting/spring-allac
+          uri: https://github.com/RHMAccounting/spring-allacc
           search-paths:
             - "config-files/{application}/{profile}"
             - "config-files/global/{profile}"
