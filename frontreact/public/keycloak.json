@@ -1,0 +1,12 @@
+{
+  "realm": "RHM",
+  "auth-server-url": "http://192.168.99.100:8080/auth",
+  "ssl-required": "external",
+  "resource": "rhm-gateway",
+  "verify-token-audience": true,
+  "credentials": {
+    "secret": "be20f0a6-40dc-4e9b-a469-771685f0e613"
+  },
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}
