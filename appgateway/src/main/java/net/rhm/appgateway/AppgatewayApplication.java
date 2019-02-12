@@ -8,10 +8,10 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableOAuth2Sso
 @EnableEurekaClient
 @EnableZuulProxy
 @EnableSwagger2
+@EnableOAuth2Sso
 public class AppgatewayApplication {
 
     public static void main(String[] args) {

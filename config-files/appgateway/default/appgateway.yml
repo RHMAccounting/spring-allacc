@@ -1,3 +1,0 @@
-zuul:
-  prefix: /api
-  sensitiveHeaders: Cookie,Set-Cookie
