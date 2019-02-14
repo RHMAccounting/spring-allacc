@@ -22,11 +22,12 @@ class Home extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('/api/user', {credentials: 'include'});
+        const response = await fetch('/api/user/users', {credentials: 'include'});
         const body = await response.text();
         if (body === '') {
             this.setState(({isAuthenticated: false}))
         } else {
+            console.log(body);
             this.setState({isAuthenticated: true, user: JSON.parse(body)})
         }
     }
@@ -51,11 +52,11 @@ class Home extends Component {
     render() {
         const message = this.state.user ?
             <h2>Welcome, {this.state.user.name}!</h2> :
-            <p>Please log in to manage your JUG Tour.</p>;
+            <p>Please log in to manage your account.</p>;
 
         const button = this.state.isAuthenticated ?
             <div>
-                <Button color="link"><Link to="/groups">Manage ERP/CRM</Link></Button>
+                <Button color="link"><Link to="/dashboard">Manage ERP/CRM</Link></Button>
                 <br/>
                 <Button color="link" onClick={this.logout}>Logout</Button>
             </div> :

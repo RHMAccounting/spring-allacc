@@ -1,12 +1,10 @@
 package net.rhm.appuser;
 
-import net.rhm.appuser.model.User;
-import net.rhm.appuser.repository.UserRepository;
+import net.rhm.appuser.model.entity.User;
+import net.rhm.appuser.model.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 @Component
