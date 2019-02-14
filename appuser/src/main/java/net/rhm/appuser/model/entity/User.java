@@ -3,22 +3,34 @@ package net.rhm.appuser.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.rhm.appuser.model.AuditModel;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
+@Table(name="app_user")
+public class User extends AuditModel {
 
     @Id
-    private String id;
-    private String name;
-    private String email;
+    @GeneratedValue(generator = "user_generator")
+    @SequenceGenerator(
+            name = "user_generator",
+            sequenceName = "user_sequence",
+            initialValue = 1000
+    )
+    private Long id;
 
-    public User(String name) {
-        this.name = name;
-    }
+    @NotBlank
+    private String accessId;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String userName;
+
+
 }

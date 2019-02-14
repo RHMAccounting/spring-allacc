@@ -18,11 +18,11 @@ class Initializer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        Stream.of("Bill", "Jack", "Isidor",
+       /* Stream.of("Bill", "Jack", "Isidor",
                 "Cat.").forEach(name ->
                 repository.save(new User(name,name, name))
         );
-
+*/
         repository.findAll().forEach(System.out::println);
     }
 }
