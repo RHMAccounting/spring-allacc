@@ -22,7 +22,7 @@ class Home extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('/api/user/users', {credentials: 'include'});
+        const response = await fetch('/api/user/signin', {credentials: 'include'});
         const body = await response.text();
         if (body === '') {
             this.setState(({isAuthenticated: false}))
@@ -37,7 +37,7 @@ class Home extends Component {
         if (port === ':3000') {
             port = ':8765';
         }
-        window.location.href = '//' + window.location.hostname + port + '/private';
+        window.location.href = '//' + window.location.hostname + port + '/login';
     }
 
     logout() {

@@ -47,8 +47,16 @@ public class LoginController {
         Map<String, Object> details = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
 
         try {
-            AuthServerUser authSrvUser = authUserServerRepository.findByUserId(principalFactory.getPrincipalId(details));
-            return authSrvUser.getAuthUser().getUser();
+            this.principalFactory.setPrincipalDetails(details);
+            AuthServerUser authSrvUser = authUserServerRepository.findByUserId(this.principalFactory.getPrincipalId());
+
+            if(authSrvUser != null)
+                return authSrvUser.getAuthUser().getUser();
+            else {
+                // Register as new user here :
+                User newUser = this.principalFactory.mapUser();
+
+            }
         }
         catch(RuntimeException e) {
             LOGGER.error("Error fetching user...");
