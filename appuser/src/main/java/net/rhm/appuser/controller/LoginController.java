@@ -1,6 +1,9 @@
 package net.rhm.appuser.controller;
 
+import net.rhm.appuser.factory.PrincipalFactory;
+import net.rhm.appuser.model.entity.AuthServerUser;
 import net.rhm.appuser.model.entity.User;
+import net.rhm.appuser.model.repository.AuthServerUserRepository;
 import net.rhm.appuser.model.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +25,14 @@ public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
-    UserRepository userRepository;
+    private AuthServerUserRepository authUserServerRepository;
+    private PrincipalFactory principalFactory;
 
+    @Autowired
+    public LoginController(PrincipalFactory principalFactory, AuthServerUserRepository authUserServerRepository) {
+        this.principalFactory = principalFactory;
+        this.authUserServerRepository = authUserServerRepository;
+    }
     /**
      * Endpoint checking whether principal already exists in database, otherwise create it
      * @param principal authenticated user using Token
@@ -39,8 +47,8 @@ public class LoginController {
         Map<String, Object> details = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
 
         try {
-            User user = userRepository.findByEmail((String)(details.get("email")));
-            return user;
+            AuthServerUser authSrvUser = authUserServerRepository.findByUserId(principalFactory.getPrincipalId(details));
+            return authSrvUser.getAuthUser().getUser();
         }
         catch(RuntimeException e) {
             LOGGER.error("Error fetching user...");
