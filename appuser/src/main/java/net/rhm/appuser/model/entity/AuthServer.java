@@ -25,6 +25,7 @@ public class AuthServer extends AuditModel {
     private Long id;
 
     @NotBlank
+    @Column(unique = true)
     private String name;
 
     @NotBlank

@@ -27,10 +27,14 @@ public class LoginController {
 
     private AuthServerUserRepository authUserServerRepository;
     private PrincipalFactory principalFactory;
+    private UserRepository userRepository;
 
     @Autowired
-    public LoginController(PrincipalFactory principalFactory, AuthServerUserRepository authUserServerRepository) {
+    public LoginController(PrincipalFactory principalFactory,
+                           AuthServerUserRepository authUserServerRepository,
+                           UserRepository userRepository) {
         this.principalFactory = principalFactory;
+        this.userRepository = userRepository;
         this.authUserServerRepository = authUserServerRepository;
     }
     /**
@@ -56,6 +60,14 @@ public class LoginController {
                 // Register as new user here :
                 User newUser = this.principalFactory.mapUser();
 
+
+                LOGGER.debug("Persisting user here...");
+                this.userRepository.save(newUser);
+                LOGGER.debug("Id generated: " + newUser.getId());
+
+                LOGGER.debug("Now about to persist AuthServerUser");
+
+                return newUser;
             }
         }
         catch(RuntimeException e) {

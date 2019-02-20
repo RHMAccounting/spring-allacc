@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthServerRepository extends JpaRepository<AuthServer, Long> {
+
+    AuthServer findByName(String name);
 }

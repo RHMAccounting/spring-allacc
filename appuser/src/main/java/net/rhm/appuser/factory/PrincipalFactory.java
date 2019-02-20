@@ -1,11 +1,15 @@
 package net.rhm.appuser.factory;
 
 import net.rhm.appuser.factory.oauth.Okta;
+import net.rhm.appuser.model.entity.AuthServer;
 import net.rhm.appuser.model.entity.User;
+import net.rhm.appuser.model.repository.AuthServerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -16,9 +20,15 @@ public class PrincipalFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrincipalFactory.class);
 
-    private String server;
     private Map<String, Object> principalDetails;
+    private AuthServerRepository authServerRepository;
+    private AuthServer authServer;
 
+    @Autowired
+    public PrincipalFactory(AuthServerRepository authServerRepository){
+
+        this.authServerRepository = authServerRepository;
+    }
     /**
      * Setter
      * @param principalDetails represent user details fetched from OAuth2 server
@@ -37,7 +47,9 @@ public class PrincipalFactory {
 
         // Case Okta :
         if (this.principalDetails.containsKey("sub")) {
-            this.server = "Okta";
+
+            this.authServer = this.authServerRepository.findByName("Okta");
+
             return (String)this.principalDetails.get("sub");
         }
 
@@ -48,13 +60,13 @@ public class PrincipalFactory {
      * Mapping principal to user depending on server
      * @return a user instance
      */
-    public User mapUser() {
+    public Map<User,AuthServer> mapUser() {
 
         User newUser = new User();
 
-        switch(this.server) {
+        switch(this.authServer.getName()) {
             case "Okta":
-                return Okta.mapUser(newUser, this.principalDetails);
+                return Collections.singletonMap(Okta.mapUser(newUser, this.principalDetails), this.authServer);
 
             default:
                 LOGGER.error("Error matching server !");
@@ -62,7 +74,7 @@ public class PrincipalFactory {
         }
     }
 
-    public String getServer() {
-        return this.server;
+    public AuthServer getServer() {
+        return this.authServer;
     }
 }
