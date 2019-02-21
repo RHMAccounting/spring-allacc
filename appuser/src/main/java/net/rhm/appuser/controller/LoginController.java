@@ -1,6 +1,7 @@
 package net.rhm.appuser.controller;
 
 import net.rhm.appuser.factory.PrincipalFactory;
+import net.rhm.appuser.model.entity.AuthServer;
 import net.rhm.appuser.model.entity.AuthServerUser;
 import net.rhm.appuser.model.entity.User;
 import net.rhm.appuser.model.repository.AuthServerUserRepository;
@@ -59,13 +60,6 @@ public class LoginController {
             else {
                 // Register as new user here :
                 User newUser = this.principalFactory.mapUser();
-
-
-                LOGGER.debug("Persisting user here...");
-                this.userRepository.save(newUser);
-                LOGGER.debug("Id generated: " + newUser.getId());
-
-                LOGGER.debug("Now about to persist AuthServerUser");
 
                 return newUser;
             }

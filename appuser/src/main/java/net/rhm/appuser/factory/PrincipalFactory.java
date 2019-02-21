@@ -4,10 +4,13 @@ import net.rhm.appuser.factory.oauth.Okta;
 import net.rhm.appuser.model.entity.AuthServer;
 import net.rhm.appuser.model.entity.User;
 import net.rhm.appuser.model.repository.AuthServerRepository;
+import net.rhm.appuser.model.repository.AuthServerUserRepository;
+import net.rhm.appuser.model.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Map;
@@ -22,12 +25,17 @@ public class PrincipalFactory {
 
     private Map<String, Object> principalDetails;
     private AuthServerRepository authServerRepository;
+    private UserRepository userRepository;
+    private AuthServerUserRepository authServerUserRepository;
     private AuthServer authServer;
 
     @Autowired
-    public PrincipalFactory(AuthServerRepository authServerRepository){
+    public PrincipalFactory(AuthServerRepository authServerRepository, UserRepository userRepository,
+                            AuthServerUserRepository authServerUserRepository){
 
         this.authServerRepository = authServerRepository;
+        this.userRepository = userRepository;
+        this.authServerUserRepository = authServerUserRepository;
     }
     /**
      * Setter
@@ -58,15 +66,18 @@ public class PrincipalFactory {
 
     /**
      * Mapping principal to user depending on server
+     * Persisting data to DB
      * @return a user instance
      */
-    public Map<User,AuthServer> mapUser() {
+    @Transactional
+    public User mapUser() {
 
         User newUser = new User();
 
         switch(this.authServer.getName()) {
             case "Okta":
-                return Collections.singletonMap(Okta.mapUser(newUser, this.principalDetails), this.authServer);
+                return Okta.mapUserAndSave(newUser, this.principalDetails, this.authServer,
+                        this.authServerUserRepository, this.userRepository);
 
             default:
                 LOGGER.error("Error matching server !");
