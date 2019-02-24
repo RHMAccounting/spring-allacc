@@ -62,9 +62,11 @@ class Home extends Component {
             </div> :
             <Button color="primary" onClick={this.login}>Login</Button>;
 
+        const loggedUser = this.state.user ? this.state.user:undefined;
+
         return (
             <div>
-                <AppNavBar user={this.state.user}/>
+                <AppNavBar user={loggedUser} />
                 <Container fluid>
                     {message}
                     {button}

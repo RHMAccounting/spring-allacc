@@ -18,10 +18,10 @@ import java.util.Date;
 public class AccessLog {
 
     @Id
-    @GeneratedValue(generator = "auth_generator")
+    @GeneratedValue(generator = "log_generator")
     @SequenceGenerator(
-            name = "auth_generator",
-            sequenceName = "auth_sequence",
+            name = "log_generator",
+            sequenceName = "log_sequence",
             initialValue = 1
     )
     private Long id;

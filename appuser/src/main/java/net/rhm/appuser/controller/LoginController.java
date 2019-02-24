@@ -65,7 +65,7 @@ public class LoginController {
             }
         }
         catch(RuntimeException e) {
-            LOGGER.error("Error fetching user...");
+            LOGGER.error("Error fetching user..." + e.getMessage());
         }
 
         return null;

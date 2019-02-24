@@ -1,5 +1,6 @@
 package net.rhm.appgateway;
 
+import net.rhm.appgateway.interceptor.UserFeignClientInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -13,6 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import feign.RequestInterceptor;
 
 import java.util.Collections;
 
@@ -26,6 +28,11 @@ public class AppgatewayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AppgatewayApplication.class, args);
+    }
+
+    @Bean
+    public RequestInterceptor getUserFeignClientInterceptor() {
+        return new UserFeignClientInterceptor();
     }
 
     @Bean
