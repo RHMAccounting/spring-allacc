@@ -1,10 +1,9 @@
 package net.rhm.appuser.model.embeddable;
 
 import lombok.Data;
-import net.rhm.appuser.model.entity.AuthServer;
+import net.rhm.appuser.model.entity.Company;
 import net.rhm.appuser.model.entity.User;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,26 +13,26 @@ import java.util.Objects;
 
 @Embeddable
 @Data
-public class AuthUser implements Serializable {
+public class CompanyUser implements Serializable {
+    
+    @NotNull
+    // Relationship
+    @OneToOne()
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private Company company;
 
     @NotNull
     // Relationship
     @OneToOne()
-    @JoinColumn(name = "auth_server_id", referencedColumnName = "id")
-    private AuthServer authServer;
-
-    @NotNull
-    // Relationship
-    @OneToOne()
-    @JoinColumn(name = "app_user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public AuthServer getAuthServer() {
-        return authServer;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setAuthServer(AuthServer authServer) {
-        this.authServer = authServer;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public User getUser() {
@@ -48,13 +47,13 @@ public class AuthUser implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthUser authUser = (AuthUser) o;
-        return Objects.equals(authServer, authUser.authServer) &&
-                Objects.equals(user, authUser.user);
+        CompanyUser that = (CompanyUser) o;
+        return Objects.equals(company, that.company) &&
+                Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authServer, user);
+        return Objects.hash(company, user);
     }
 }

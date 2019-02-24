@@ -51,7 +51,7 @@ class Home extends Component {
 
     render() {
         const message = this.state.user ?
-            <h2>Welcome, {this.state.user.name}!</h2> :
+            <h2>Welcome,  {this.state.user.firstName} {this.state.user.lastName}!</h2> :
             <p>Please log in to manage your account.</p>;
 
         const button = this.state.isAuthenticated ?
@@ -64,7 +64,7 @@ class Home extends Component {
 
         return (
             <div>
-                <AppNavBar/>
+                <AppNavBar user={this.state.user}/>
                 <Container fluid>
                     {message}
                     {button}
