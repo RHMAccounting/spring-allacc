@@ -4,6 +4,7 @@ import net.rhm.appuser.model.entity.User;
 import net.rhm.appuser.model.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -28,22 +29,24 @@ public class UserController {
     @GetMapping("/users")
     @ResponseBody
     @SuppressWarnings("unchecked")
-    public Object listUsers(Principal principal) {
+    public Object listUsers(Principal principal, @RequestHeader HttpHeaders headers) {
 
         OAuth2Authentication authentication = (OAuth2Authentication) principal;
         Map<String, Object> details = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
 
         LOGGER.debug("Authenticated user... " + details.toString());
         LOGGER.debug("Authenticated user email " + details.get("email").toString());
+        LOGGER.debug("HEADERS : {}", headers);
 
         return details;
     }
 
 
     @PutMapping("/user")
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User user, @RequestHeader HttpHeaders headers) {
 
         LOGGER.debug("Request to update user : {}", user);
+        LOGGER.debug("HEADERS : {}", headers);
         User result = userRepository.save(user);
         return ResponseEntity.ok().body(result);
     }

@@ -24,7 +24,7 @@ import java.util.Map;
 @RestController
 public class LoginController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     private AuthServerUserRepository authUserServerRepository;
     private PrincipalFactory principalFactory;
@@ -52,6 +52,8 @@ public class LoginController {
         Map<String, Object> details = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
 
         try {
+
+            LOGGER.debug("Signin in...");
             this.principalFactory.setPrincipalDetails(details);
             AuthServerUser authSrvUser = authUserServerRepository.findByUserId(this.principalFactory.getPrincipalId());
 
