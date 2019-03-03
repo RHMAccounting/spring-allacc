@@ -1,5 +1,6 @@
 package net.rhm.appgateway.config;
 
+import net.rhm.appgateway.interceptor.CsrfHeaderFilter;
 import net.rhm.appgateway.interceptor.PostFilter;
 import net.rhm.appgateway.interceptor.QueryParamPreFilter;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 
 
@@ -23,7 +25,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .requestMatcher(new RequestHeaderRequestMatcher("Authorization"))
                 .authorizeRequests()
-                .antMatchers("/**").authenticated();
+                .antMatchers("/**").authenticated()
+                .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+         ;
     }
 
 

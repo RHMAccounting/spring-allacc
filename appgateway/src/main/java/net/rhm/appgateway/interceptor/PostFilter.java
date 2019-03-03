@@ -70,9 +70,9 @@ public class PostFilter extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        ctx.addZuulRequestHeader("x-pp-user", ctx.get(TOKEN_TYPE) + " " + getAccessToken(ctx));
+        ctx.addZuulRequestHeader("X-XSRF-TOKEN", ctx.get(TOKEN_TYPE) + " " + getAccessToken(ctx));
 
-        ctx.getResponse().addHeader("Authorization","Bearer " + getAccessToken(ctx));
+        ctx.getResponse().addHeader("Authorization", getAccessToken(ctx));
         LOGGER.debug("RESPONSE HEADERS : " + LogHeaders.displayHeaders(ctx.getResponse()));
 
         return null;
